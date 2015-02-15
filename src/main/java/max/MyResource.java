@@ -128,14 +128,14 @@ public class MyResource {
         MimeMessage msg = new MimeMessage(session);
         Transport t = null;
         try {
-            Address massimo = new InternetAddress("penzo.massimo@gmail.com", "CHUCKY");
+            Address massimo = new InternetAddress("penzo.massimo@gmail.com", "ONLINE SALES");
             Address alma = new InternetAddress("penzo.massimo@gmail.com");
             msg.setText(jsonData);
             msg.setFrom(massimo);
             msg.setRecipient(Message.RecipientType.TO, alma);
-            msg.setSubject("TEST - You must comply.");
+            msg.setSubject("NEW Purchase Order");
             t = session.getTransport("smtps");
-            t.connect("smtp.gmail.com", "penzo.massimo@gmail.com", "password");
+            t.connect("smtp.gmail.com", "penzo.massimo@gmail.com", "");
             t.sendMessage(msg, msg.getAllRecipients());
             return "email sent";
         } catch (MessagingException | UnsupportedEncodingException ex) {
