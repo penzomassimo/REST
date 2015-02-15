@@ -135,7 +135,7 @@ public class MyResource {
             msg.setRecipient(Message.RecipientType.TO, alma);
             msg.setSubject("TEST - You must comply.");
             t = session.getTransport("smtps");
-            t.connect("smtp.gmail.com", "penzo.massimo@gmail.com", "electrica913");
+            t.connect("smtp.gmail.com", "penzo.massimo@gmail.com", "password");
             t.sendMessage(msg, msg.getAllRecipients());
             return "email sent";
         } catch (MessagingException | UnsupportedEncodingException ex) {
