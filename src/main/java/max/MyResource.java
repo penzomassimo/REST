@@ -26,7 +26,7 @@ public class MyResource {
     @Produces("application/json")
     public String getManCatalog() {
         List<Product> myList = new ArrayList<>();
-        Product p1 = new Product("Camera0","Best Camera0",101);
+        Product p1 = new Product("Camera0","Best Camera0",555555);
         Product p2 = new Product("Camera1","Best Camera1",220);
         Product p3 = new Product("Camera2","Best Camera2", 2);
         Product p4 = new Product("Camera3","Best Camera3", 3);
@@ -189,4 +189,28 @@ public class MyResource {
 
         return "YOUR DOCTORS HAVE BEEN SAVED";
     }
+
+    @GET
+    @Path("/generic")
+    @Produces("application/json")
+    public String getGenericProducts(){
+
+        /* HIBERNATE PROGRAMMING MODEL */
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+        SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+        org.hibernate.Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        String hql = "SELECT doctor_id, doctor_name FROM Doctor";
+        Query query = session.createQuery(hql);
+        List results = query.list();
+        session.getTransaction().commit();
+        /*CREATING THE JSON STRING*/
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        String json = gson.toJson(results);
+
+        return json;
+    }
+
 }
