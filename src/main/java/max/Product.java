@@ -3,7 +3,10 @@ package max;
 /**
  * Created by massimo on 2/13/15.
  */
+
+
 public class Product {
+
     private String name;
     private String description;
     private int price;

@@ -3,6 +3,7 @@ package max;
 public class CustomMessage {
     private String subject;
     private String date;
+
     public String getSubject() {
         return subject;
     }

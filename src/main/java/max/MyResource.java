@@ -2,8 +2,13 @@ package max;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.hibernate.*;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 import javax.mail.*;
+import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.ws.rs.*;
@@ -45,6 +50,8 @@ public class MyResource {
     @Path("woman_catalog")
     @Produces(MediaType.TEXT_PLAIN)
     public String getWomanCatalog() {
+
+
         return "this is the WOMAN CATALOG";
     }
 
@@ -135,7 +142,7 @@ public class MyResource {
             msg.setRecipient(Message.RecipientType.TO, alma);
             msg.setSubject("NEW Purchase Order");
             t = session.getTransport("smtps");
-            t.connect("smtp.gmail.com", "penzo.massimo@gmail.com", "");
+            t.connect("smtp.gmail.com", "penzo.massimo@gmail.com", "electrica913");
             t.sendMessage(msg, msg.getAllRecipients());
             return "email sent";
         } catch (MessagingException | UnsupportedEncodingException ex) {
@@ -151,5 +158,45 @@ public class MyResource {
             }
         }
         return "closed";
+    }
+
+    @GET
+    @Produces("text/plain")
+    @Path("/add_doctor")
+    public String addDoctors() {
+
+		/* CREATING DOCTOR OBJECTS */
+        Doctor doc1 = new Doctor();
+        Doctor doc2 = new Doctor();
+        Doctor doc3 = new Doctor();
+        Doctor doc4 = new Doctor();
+
+		/* SETTING PROPERTIES */
+        doc1.setDoctor_name("Mary");
+        doc1.setDoctor_lastname("Munter");
+
+        doc2.setDoctor_name("Virginia");
+        doc2.setDoctor_lastname("Johnson");
+
+        doc3.setDoctor_name("Pedro");
+        doc3.setDoctor_lastname("Martinez");
+
+        doc4.setDoctor_name("Alma");
+        doc4.setDoctor_lastname("Carreras");
+
+		/* HIBERNATE PROGRAMMING MODEL */
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+        SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+        org.hibernate.Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(doc1);
+        session.save(doc2);
+        session.save(doc3);
+        session.save(doc4);
+        session.getTransaction().commit();
+
+        return "YOUR DOCTORS HAVE BEEN SAVED";
+
     }
 }
