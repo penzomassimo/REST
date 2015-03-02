@@ -26,5 +26,9 @@
 
         <!--CLASS MAPPINGS-->
         <mapping class="max.Doctor"></mapping>
+        <mapping class="max.Product"></mapping>
+        <mapping class="max.ManProduct"></mapping>
+        <mapping class="max.WomanProduct"></mapping>
+        <mapping class="max.KidProduct"></mapping>
     </session-factory>
 </hibernate-configuration>

@@ -3,13 +3,11 @@ package max;
 import javax.persistence.*;
 
 /**
- * Created by massimo on 2/13/15.
+ * Created by massimo on 3/2/15.
  */
-
 @Entity
-@Table(name = "products")
-public class Product {
-
+@Table(name = "man_products")
+public class ManProduct {
     @Id
     @Column(name = "product_id")
     @GeneratedValue(strategy=GenerationType.AUTO)
@@ -22,9 +20,13 @@ public class Product {
     private String description;
 
     @Column(name = "price")
-    private int price;
+    private double price;
 
-    public Product(String name, String description, int price) {
+    public ManProduct() {
+        super();
+    }
+
+    public ManProduct(String name, String description, double price) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -46,7 +48,7 @@ public class Product {
         this.description = description;
     }
 
-    public int getPrice() {
+    public double getPrice() {
         return price;
     }
 

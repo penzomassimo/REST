@@ -2,17 +2,16 @@ package max;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.hibernate.*;
+import org.hibernate.Query;
+import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import javax.mail.*;
-import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.ws.rs.*;
-import javax.ws.rs.core.MediaType;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,39 +23,91 @@ public class MyResource {
     @GET
     @Path("man_catalog")
     @Produces("application/json")
-    public String getManCatalog() {
-        List<Product> myList = new ArrayList<>();
-        Product p1 = new Product("Camera0","Best Camera0",555555);
-        Product p2 = new Product("Camera1","Best Camera1",220);
-        Product p3 = new Product("Camera2","Best Camera2", 2);
-        Product p4 = new Product("Camera3","Best Camera3", 3);
-        Product p5 = new Product("Camera4","Best Camera4", 4);
-        Product p6 = new Product("Camera5","Best Camera4", 5);
-        Product p7 = new Product("Camera6","Best Camera4", 6);
-        myList.add(p1);
-        myList.add(p2);
-        myList.add(p3);
-        myList.add(p4);
-        myList.add(p5);
-        myList.add(p6);
-        myList.add(p7);
+    public String getManProducts() {
+
+        /* HIBERNATE PROGRAMMING MODEL */
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+        SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+        org.hibernate.Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        String hql = "FROM ManProduct";
+        Query query = session.createQuery(hql);
+        List results = query.list();
+        session.getTransaction().commit();
+        /*CREATING THE JSON STRING*/
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
-        return gson.toJson(myList);
+        String json = gson.toJson(results);
+
+        return json;
+    }
+
+    @GET
+    @Path("add_man_product")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public String addNewManProduct(final String jsonData){
+
+
+        ManProduct p = new ManProduct("iMac","Best computer", 255.99);
+
+		/* HIBERNATE PROGRAMMING MODEL */
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+        SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+        org.hibernate.Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(p);
+        session.getTransaction().commit();
+
+        return "Your product has been saved";
     }
 
     @GET
     @Path("woman_catalog")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getWomanCatalog() {
-        return "this is the WOMAN CATALOG";
+    @Produces("application/json")
+    public String getWomanProducts() {
+
+        /* HIBERNATE PROGRAMMING MODEL */
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+        SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+        org.hibernate.Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        String hql = "FROM WomanProduct";
+        Query query = session.createQuery(hql);
+        List results = query.list();
+        session.getTransaction().commit();
+        /*CREATING THE JSON STRING*/
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        String json = gson.toJson(results);
+
+        return json;
     }
 
     @GET
     @Path("kid_catalog")
-    @Produces(MediaType.TEXT_PLAIN)
-    public String getKidCatalog() {
-        return "this is the KID CATALOG";
+    @Produces("application/json")
+    public String getKidProducts() {
+
+        /* HIBERNATE PROGRAMMING MODEL */
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+        SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+        org.hibernate.Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        String hql = "FROM KidProduct";
+        Query query = session.createQuery(hql);
+        List results = query.list();
+        session.getTransaction().commit();
+        /*CREATING THE JSON STRING*/
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        String json = gson.toJson(results);
+
+        return json;
     }
 
     @GET
@@ -175,6 +226,7 @@ public class MyResource {
         doc4.setDoctor_name("Alma");
         doc4.setDoctor_lastname("Carreras");
 
+
 		/* HIBERNATE PROGRAMMING MODEL */
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
@@ -201,9 +253,10 @@ public class MyResource {
         SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
         org.hibernate.Session session = sessionFactory.openSession();
         session.beginTransaction();
-        String hql = "SELECT doctor_id, doctor_name FROM Doctor";
+        String hql = "FROM Doctor";
         Query query = session.createQuery(hql);
         List results = query.list();
+
         session.getTransaction().commit();
         /*CREATING THE JSON STRING*/
         GsonBuilder builder = new GsonBuilder();
