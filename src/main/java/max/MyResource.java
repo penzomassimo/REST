@@ -49,7 +49,6 @@ public class MyResource {
     @Produces("application/json")
     public String addNewManProduct(final String jsonData){
 
-
         ManProduct p = new ManProduct("iMac","Best computer", 255.99);
 
 		/* HIBERNATE PROGRAMMING MODEL */
@@ -61,7 +60,7 @@ public class MyResource {
         session.save(p);
         session.getTransaction().commit();
 
-        return "Your product has been saved";
+        return "Your MAN product has been saved";
     }
 
     @GET
@@ -87,6 +86,28 @@ public class MyResource {
         return json;
     }
 
+
+    @GET
+    @Path("add_woman_product")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public String addNewWomanProduct(final String jsonData){
+
+
+        WomanProduct p = new WomanProduct("iMac","Best computer", 255.99);
+
+		/* HIBERNATE PROGRAMMING MODEL */
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+        SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+        org.hibernate.Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(p);
+        session.getTransaction().commit();
+
+        return "Your WOMAN product has been saved";
+    }
+
     @GET
     @Path("kid_catalog")
     @Produces("application/json")
@@ -108,6 +129,27 @@ public class MyResource {
         String json = gson.toJson(results);
 
         return json;
+    }
+
+    @GET
+    @Path("add_kid_product")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public String addNewKidProduct(final String jsonData){
+
+
+        KidProduct p = new KidProduct("iMac","Best computer", 255.99);
+
+		/* HIBERNATE PROGRAMMING MODEL */
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
+        SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+        org.hibernate.Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.save(p);
+        session.getTransaction().commit();
+
+        return "Your KID product has been saved";
     }
 
     @GET
