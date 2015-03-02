@@ -97,7 +97,6 @@ public class MyResource {
         return json;
     }
 
-
     @GET
     @Path("add_woman_product")
     @Consumes("application/json")
@@ -273,68 +272,6 @@ public class MyResource {
             }
         }
         return "closed";
-    }
-
-    @GET
-    @Produces("text/plain")
-    @Path("/add_doctor")
-    public String addDoctors() {
-		/* CREATING DOCTOR OBJECTS */
-        Doctor doc1 = new Doctor();
-        Doctor doc2 = new Doctor();
-        Doctor doc3 = new Doctor();
-        Doctor doc4 = new Doctor();
-		/* SETTING PROPERTIES */
-        doc1.setDoctor_name("Mary");
-        doc1.setDoctor_lastname("Munter");
-
-        doc2.setDoctor_name("Virginia");
-        doc2.setDoctor_lastname("Johnson");
-
-        doc3.setDoctor_name("Pedro");
-        doc3.setDoctor_lastname("Martinez");
-
-        doc4.setDoctor_name("Alma");
-        doc4.setDoctor_lastname("Carreras");
-
-
-		/* HIBERNATE PROGRAMMING MODEL */
-        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-        SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-        org.hibernate.Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(doc1);
-        session.save(doc2);
-        session.save(doc3);
-        session.save(doc4);
-        session.getTransaction().commit();
-
-        return "YOUR DOCTORS HAVE BEEN SAVED";
-    }
-
-    @GET
-    @Path("/generic")
-    @Produces("application/json")
-    public String getGenericProducts(){
-
-        /* HIBERNATE PROGRAMMING MODEL */
-        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
-        SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-        org.hibernate.Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        String hql = "FROM Doctor";
-        Query query = session.createQuery(hql);
-        List results = query.list();
-
-        session.getTransaction().commit();
-        /*CREATING THE JSON STRING*/
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-        String json = gson.toJson(results);
-
-        return json;
     }
 
 }
