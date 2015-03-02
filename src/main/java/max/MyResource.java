@@ -2,13 +2,13 @@ package max;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.hibernate.Query;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
 import javax.mail.*;
+import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.ws.rs.*;
@@ -26,10 +26,14 @@ public class MyResource {
     public String getManProducts() {
 
         /* HIBERNATE PROGRAMMING MODEL */
+/*
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
         SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-        org.hibernate.Session session = sessionFactory.openSession();
+*/
+
+        org.hibernate.Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        /*org.hibernate.Session session = sessionFactory.openSession();*/
         session.beginTransaction();
         String hql = "FROM ManProduct";
         Query query = session.createQuery(hql);
