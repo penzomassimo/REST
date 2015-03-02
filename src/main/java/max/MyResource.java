@@ -53,13 +53,16 @@ public class MyResource {
     @Produces("application/json")
     public String addNewManProduct(final String jsonData){
 
-        ManProduct p = new ManProduct("iMac","Best computer", 255.99);
+        ManProduct p = new ManProduct("iMac3333","Best computer", 255.99);
 
 		/* HIBERNATE PROGRAMMING MODEL */
+/*
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
         SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-        org.hibernate.Session session = sessionFactory.openSession();
+*/
+        org.hibernate.Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        /*org.hibernate.Session session = sessionFactory.openSession();*/
         session.beginTransaction();
         session.save(p);
         session.getTransaction().commit();
@@ -73,10 +76,14 @@ public class MyResource {
     public String getWomanProducts() {
 
         /* HIBERNATE PROGRAMMING MODEL */
+/*
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
         SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-        org.hibernate.Session session = sessionFactory.openSession();
+*/
+
+        org.hibernate.Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        /*org.hibernate.Session session = sessionFactory.openSession();*/
         session.beginTransaction();
         String hql = "FROM WomanProduct";
         Query query = session.createQuery(hql);
@@ -101,10 +108,16 @@ public class MyResource {
         WomanProduct p = new WomanProduct("iMac","Best computer", 255.99);
 
 		/* HIBERNATE PROGRAMMING MODEL */
+/*
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
         SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+*/
+
+        org.hibernate.Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+/*
         org.hibernate.Session session = sessionFactory.openSession();
+*/
         session.beginTransaction();
         session.save(p);
         session.getTransaction().commit();
@@ -118,10 +131,16 @@ public class MyResource {
     public String getKidProducts() {
 
         /* HIBERNATE PROGRAMMING MODEL */
+/*
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
         SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+*/
+
+        org.hibernate.Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+/*
         org.hibernate.Session session = sessionFactory.openSession();
+*/
         session.beginTransaction();
         String hql = "FROM KidProduct";
         Query query = session.createQuery(hql);
@@ -145,10 +164,16 @@ public class MyResource {
         KidProduct p = new KidProduct("iMac","Best computer", 255.99);
 
 		/* HIBERNATE PROGRAMMING MODEL */
+/*
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
         SessionFactory sessionFactory = configuration.buildSessionFactory(serviceRegistry);
+*/
+
+        org.hibernate.Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+/*
         org.hibernate.Session session = sessionFactory.openSession();
+*/
         session.beginTransaction();
         session.save(p);
         session.getTransaction().commit();
