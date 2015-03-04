@@ -21,6 +21,14 @@ import java.util.Properties;
 public class MyResource {
 
     @GET
+    @Path("test")
+    @Produces("application/json")
+    public String test(){
+
+        return "test";
+    }
+
+    @GET
     @Path("man_catalog")
     @Produces("application/json")
     public String getManProducts() {
