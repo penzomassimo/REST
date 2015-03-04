@@ -282,4 +282,21 @@ public class MyResource {
         return "closed";
     }
 
+    @POST
+    @Path("registration")
+    @Consumes("application/json")
+    @Produces("application/json")
+    public String registration(final String jsonData){
+
+        GsonBuilder builder = new GsonBuilder();
+        Gson gson = builder.create();
+        User user = gson.fromJson(jsonData, User.class);
+        org.hibernate.Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        session.save(user);
+        session.getTransaction().commit();
+
+        return user.getName();
+    }
+
 }

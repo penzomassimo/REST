@@ -28,5 +28,6 @@
         <mapping class="max.ManProduct"></mapping>
         <mapping class="max.WomanProduct"></mapping>
         <mapping class="max.KidProduct"></mapping>
+        <mapping class="max.User"></mapping>
     </session-factory>
 </hibernate-configuration>
