@@ -22,6 +22,9 @@ public class KidProduct {
     @Column(name = "price")
     private double price;
 
+    @Column(name = "pic_url")
+    private String pic_url;
+
     public KidProduct() {
         super();
     }
@@ -54,5 +57,13 @@ public class KidProduct {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public String getPic_url() {
+        return pic_url;
+    }
+
+    public void setPic_url(String pic_url) {
+        this.pic_url = pic_url;
     }
 }
